@@ -4,10 +4,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-    entry: './src/javascripts/main.js',
+    entry: './src/assets/js/main.js',
     output: {
         path: path.resolve(__dirname, './dist'),
-        filename: 'javascripts/main.js',
+        filename: 'assets/js/main.js',
     },
     module: {
         rules: [
@@ -22,15 +22,27 @@ module.exports = {
                         loader: 'css-loader',
                     },
                 ],
-          },
+            },
+            {
+                test: /\.(svg|png|jpg)/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            esModule: false,
+                            name: 'assets/img/[name].[ext]',
+                        },
+                    },
+                ],
+            },
       ],
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: './stylesheets/main.css',
+            filename: 'assets/css/main.css',
         }),
         new HtmlWebpackPlugin({
-            template: './src/templates/index.html',
+            template: './src/assets/templates/index.html',
         }),
         new CleanWebpackPlugin(),
     ],
