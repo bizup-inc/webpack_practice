@@ -4,6 +4,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
+    mode: 'development',
+    devtool: 'source-map',
     entry: './src/assets/js/main.js',
     output: {
         path: path.resolve(__dirname, './dist'),
@@ -11,6 +13,20 @@ module.exports = {
     },
     module: {
         rules: [
+            {
+                test: /\.js/,
+                exclude: /node_modules/,
+                use: [
+                {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: [
+                        ['@babel/preset-env',{ 'targets': '> 0.25%, not dead'}],
+                    ],
+                    },
+                },
+                ],
+            },
 
             {
                 test: /\.(css|sass|scss)/,
@@ -20,6 +36,9 @@ module.exports = {
                 },
                     {
                         loader: 'css-loader',
+                        // options: {
+                        //     sourceMap: true,
+                        // }
                     },
                     {
                         loader: 'sass-loader',
